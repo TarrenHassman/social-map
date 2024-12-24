@@ -15,6 +15,8 @@ const customConfig = {
       os: require.resolve('os-browserify'),
       path: require.resolve('path-browserify'),
       net: require.resolve('react-native-tcp-socket'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
     },
   },
 };

@@ -15,6 +15,7 @@ global.TextDecoder = TextDecoder
 global.EventTarget = EventTarget
 global.Event = Event
 
+
 global.AbortSignal.timeout = (ms) => {
   const controller = new AbortController()
   setTimeout(() => {

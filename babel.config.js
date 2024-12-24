@@ -22,6 +22,7 @@ module.exports = {
           '#util/as-uint8array': './node_modules/uint8arrays/dist/src/util/as-uint8array.js',
       }
     }],
-    ['@babel/plugin-transform-private-methods', { loose: true }]
+    ['@babel/plugin-transform-private-methods', { loose: true }],
+    '@babel/plugin-transform-export-namespace-from',
   ]
 };

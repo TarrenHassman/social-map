@@ -1,4 +1,4 @@
-package com.cyberflylibp2papp
+package com.myApp
 
 import android.app.Application
 import com.facebook.react.PackageList

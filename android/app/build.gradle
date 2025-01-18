@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.cyberflylibp2papp"
+    namespace "com.myApp"
     defaultConfig {
-        applicationId "com.cyberflylibp2papp"
+        applicationId "com.myApp"
         minSdkVersion 24
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

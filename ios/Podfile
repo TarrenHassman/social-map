@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'cyberflylibp2papp' do
+target 'myApp' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,7 +23,7 @@ target 'cyberflylibp2papp' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'cyberflylibp2pappTests' do
+  target 'myAppTests' do
     inherit! :complete
     # Pods for testing
   end

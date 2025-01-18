@@ -30,6 +30,21 @@ bable.config.js handles aliases
 Cyberfly.io - Setting up Polyfills to replace the previous method of just bundling up an entire nodejs enviroment
 
 
+# TODO
+
+Remove unused packages
+
+Remove other left over code from cyberfly.io
+
+Add Expo Modules
+
+Add Bottom Navigation bar
+
+Setup git issue pipeline
+
+Setup task tracker // task communication
+
+
 # Learn More
 
 ## FrontEnd

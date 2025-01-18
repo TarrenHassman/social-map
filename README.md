@@ -29,6 +29,27 @@ bable.config.js handles aliases
 # Attributions
 Cyberfly.io - Setting up Polyfills to replace the previous method of just bundling up an entire nodejs enviroment
 
+# Roadmap
+
+## Phase 1
+
+Initial Social media
+   Video upload
+   Video Feed
+   Comment and like system
+   Accounts
+   Recomendation system
+   Filters / Blocking
+
+## Phase 2
+
+Creator Monetization
+   Donation button on videos
+   Ad system and payout
+   Selling physical and digital goods
+   (TBD: Stripe Integration for US cash payments)
+   (*I have code for adding stripe connect systems but currently that requires a central server, business front,etc.*) (*Business side would be established as a non-profit*)
+
 
 # TODO
 
@@ -40,9 +61,15 @@ Add Expo Modules
 
 Add Bottom Navigation bar
 
+Integrate Crypto Wallet authentication
+
 Setup git issue pipeline
 
 Setup task tracker // task communication
+
+Setup Design pipeline (Canva / Figma Graphics and designs)
+
+Create Official Roadmap
 
 
 # Learn More

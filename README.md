@@ -1,5 +1,4 @@
-#
-
+S# Getting Started
 # Non-Federated
 
 Federated systems are the equivalent of republics.
@@ -58,13 +57,11 @@ Remove unused packages
 
 Remove other left over code from cyberfly.io
 
-Reconfigure libp2p & blockstore
-
-Integrate Crypto Wallet authentication
-
 Add Expo Modules
 
 Add Bottom Navigation bar
+
+Integrate Crypto Wallet authentication
 
 Setup git issue pipeline
 
@@ -75,13 +72,19 @@ Setup Design pipeline (Canva / Figma Graphics and designs)
 Create Official Roadmap
 
 
-# Pre-Reqs
+# TODO
 
-Nodejs
+Remove unused packages
 
+Remove other left over code from cyberfly.io
 
-Android -> Android studio and SDK
-iOS -> Ruby, Cocoapods, Xcode (Macbook)
+Add Expo Modules
+
+Add Bottom Navigation bar
+
+Setup git issue pipeline
+
+Setup task tracker // task communication
 
 
 # Learn More
@@ -104,5 +107,3 @@ To learn more about orbitDB (The database built on top of IPFS):
 
 To learn more about libp2p(Networking IPFS is built on top of):
    https://libp2p.io/
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z09MXT)

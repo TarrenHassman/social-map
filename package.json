@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "cyberflylibp2papp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ant-design/icons-react-native": "^2.3.2",
-    "@ant-design/react-native": "^4.2.0",
     "@azure/core-asynciterator-polyfill": "^1.0.2",
     "@chainsafe/libp2p-gossipsub": "^14.1.0",
     "@chainsafe/libp2p-noise": "^16.0.0",
@@ -42,6 +40,8 @@
     "crypto-browserify": "^3.12.0",
     "event-target-shim": "^6.0.2",
     "events": "^3.3.0",
+    "expo": "^52.0.0",
+    "expo-dev-client": "~5.0.10",
     "helia": "^5.2.0",
     "https-browserify": "^1.0.0",
     "interface-blockstore": "^5.3.1",
@@ -66,6 +66,7 @@
     "react-native-typography": "^1.4.1",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.2.0",
+    "react-native-webrtc": "^124.0.5",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "text-encoding": "^0.7.0",

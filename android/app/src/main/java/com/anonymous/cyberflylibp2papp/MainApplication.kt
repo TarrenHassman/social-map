@@ -1,4 +1,4 @@
-package com.cyberflylibp2papp
+package com.anonymous.cyberflylibp2papp
 import android.content.res.Configuration
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ReactNativeHostWrapper

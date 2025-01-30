@@ -3,9 +3,9 @@ module.exports = {
   plugins: [
     ['module-resolver', {
       alias: {
-        'crypto': 'react-native-quick-crypto',
+        'crypto': 'expo-crypto',
         'CustomEvent': 'custom-event-polyfill',
-        'node:crypto': 'react-native-quick-crypto',
+        'node:crypto': 'expo-crypto',
         'stream': 'stream-browserify',
         'node:stream': 'stream-browserify',
         'net': 'react-native-tcp-socket',

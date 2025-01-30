@@ -8,7 +8,7 @@ import 'weakmap-polyfill'
 import { TextEncoder, TextDecoder } from 'text-encoding'
 import { EventTarget, Event } from 'event-target-shim'
 import { Buffer } from '@craftzdog/react-native-buffer'
-import { Crypto } from '@peculiar/webcrypto'
+import * as Crypto from 'expo-crypto';
 
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
@@ -41,4 +41,4 @@ if (typeof global.CustomEvent !== "function") {
 
 
 global.Buffer = Buffer
-global.crypto.subtle = new Crypto().subtle
+global.crypto = Crypto

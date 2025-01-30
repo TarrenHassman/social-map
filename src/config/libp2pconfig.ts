@@ -21,15 +21,9 @@ export const config = {
     peerDiscovery: [
         pubsubPeerDiscovery({
             interval: 10000,
-            topics: ['cyberfly._peer-discovery._p2p._pubsub'],
+            topics: ['lk;jasdkhfoiwejkfasd'],
             listenOnly: false,
           }),
-      bootstrap({
-        list: [
-          '/ip4/15.235.211.45/tcp/31002/ws/p2p/12D3KooWA8mwP9wGUc65abVDMuYccaAMAkXhKUqpwKUZSN5McDrw',
-          '/ip4/139.99.91.128/tcp/31002/ws/p2p/12D3KooWSfGgUaeogSZuRPa4mhsAU41qJH5EpmwKg9wGVzUwFGth'
-        ],
-      }),
     ],
     connectionProtector: preSharedKey({
         psk: uint8ArrayFromString(swarm),

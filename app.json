@@ -3,5 +3,8 @@
   "displayName": "cyberflylibp2papp",
   "ios": {
     "bundleIdentifier": "com.anonymous.cyberflylibp2papp"
+  },
+  "android": {
+    "package": "com.anonymous.cyberflylibp2papp"
   }
 }

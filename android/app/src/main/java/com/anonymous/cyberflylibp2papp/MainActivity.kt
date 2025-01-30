@@ -1,4 +1,4 @@
-package com.cyberflylibp2papp
+package com.anonymous.cyberflylibp2papp
 import expo.modules.ReactActivityDelegateWrapper
 
 import com.facebook.react.ReactActivity

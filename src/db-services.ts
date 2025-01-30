@@ -11,9 +11,10 @@ debug.enable('libp2p:*,*:trace');
 
 const startOrbitDB = async () => {
   try {
+    console.log('startOrbitDB');
     const libp2p = await createLibp2p(config);
+    console.log('libp2p');
     const blockstore = new LevelBlockstore('ipfs_blockstore');
-
     const keyStorage = await ComposedStorage(
       await LRUStorage({size: 1000}),
       await LevelStorage({path: 'keystore'}),

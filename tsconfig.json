@@ -6,7 +6,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "allowJs": true
   },
   "extends": "expo/tsconfig.base"
 }

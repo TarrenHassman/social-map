@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
@@ -56,12 +56,8 @@
     "react": "18.3.1",
     "react-native": "0.76.5",
     "react-native-fs": "^2.20.0",
-    "react-native-gesture-handler": "^2.21.2",
     "react-native-get-random-values": "^1.10.0",
-    "react-native-leveldb": "^3.6.0",
-    "react-native-leveldb-level-adapter": "^0.2.1",
     "react-native-quick-crypto": "^0.7.10",
-    "react-native-reanimated": "^3.16.5",
     "react-native-tcp-socket": "^6.0.6",
     "react-native-typography": "^1.4.1",
     "react-native-url-polyfill": "^2.0.0",

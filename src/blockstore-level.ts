@@ -1,22 +1,6 @@
-/**
- * @packageDocumentation
- *
- * A Blockstore implementation that uses a flavour of [Level](https://leveljs.org/) as a backend.
- *
- * N.b. this is here largely for the sake of completeness, in node you should probably use FSDatastore, in browsers you should probably use IDBDatastore.
- *
- * @example
- *
- * ```js
- * import { LevelBlockstore } from 'blockstore-level'
- *
- * const store = new LevelBlockstore('path/to/store')
- * ```
- */
-
 import { BaseBlockstore } from 'blockstore-core'
 import { DeleteFailedError, GetFailedError, NotFoundError, OpenFailedError, PutFailedError } from 'interface-store'
-import { SKReactNativeLevel } from 'react-native-leveldb-level-adapter';
+import { Level } from 'level'
 import { base32upper } from 'multiformats/bases/base32'
 import { CID } from 'multiformats/cid'
 import * as raw from 'multiformats/codecs/raw'
@@ -35,25 +19,24 @@ export interface LevelBlockstoreInit extends DatabaseOptions<string, Uint8Array>
 }
 
 /**
- * A blockstore backed by leveldb
+ * A blockstore backed by LevelDB
  */
 export class LevelBlockstore extends BaseBlockstore {
-  public db:any
+  public db: Level<string, Uint8Array>
   private readonly opts: OpenOptions
   private readonly base: MultibaseCodec<string>
 
-  constructor (path: string , init: LevelBlockstoreInit = {}) {
+  constructor (path: string, init: LevelBlockstoreInit = {}) {
     super()
-    path = path.replaceAll('/','_')
-    this.db = typeof path === 'string'
-      ? new SKReactNativeLevel(path, {
-        valueEncoding: 'buffer'
-      })
-      : path
+    path = path.replaceAll('/', '_')
+    this.db = new Level<string, Uint8Array>(path, {
+      valueEncoding: 'buffer',
+      ...init
+    })
 
     this.opts = {
       createIfMissing: true,
-      compression: false, // same default as go
+      compression: false,
       ...init
     }
 
@@ -79,7 +62,6 @@ export class LevelBlockstore extends BaseBlockstore {
   async put (key: CID, value: Uint8Array): Promise<CID> {
     try {
       await this.db.put(this.#encode(key), value)
-
       return key
     } catch (err: any) {
       throw new PutFailedError(String(err))
@@ -87,35 +69,31 @@ export class LevelBlockstore extends BaseBlockstore {
   }
 
   async get (key: CID): Promise<Uint8Array> {
-    let data
     try {
-      data = await this.db.get(this.#encode(key))
+      return await this.db.get(this.#encode(key))
     } catch (err: any) {
       if (err.notFound != null) {
         throw new NotFoundError(String(err))
       }
-
       throw new GetFailedError(String(err))
     }
-    return data
   }
 
   async has (key: CID): Promise<boolean> {
     try {
       await this.db.get(this.#encode(key))
+      return true
     } catch (err: any) {
       if (err.notFound != null) {
         return false
       }
-
       throw err
     }
-    return true
   }
 
   async delete (key: CID): Promise<void> {
     try {
-      await this.db.delete(this.#encode(key))
+      await this.db.del(this.#encode(key))
     } catch (err: any) {
       throw new DeleteFailedError(String(err))
     }
@@ -125,7 +103,7 @@ export class LevelBlockstore extends BaseBlockstore {
     await this.db.close()
   }
 
-  async * getAll (options?: AbortOptions | undefined): AwaitIterable<Pair> {
+  async * getAll (options?: AbortOptions): AwaitIterable<Pair> {
     for await (const { key, value } of this.#query({ values: true })) {
       yield { cid: this.#decode(key), block: value }
     }
@@ -134,27 +112,23 @@ export class LevelBlockstore extends BaseBlockstore {
   async * #query (opts: { values: boolean, prefix?: string }): AsyncIterable<{ key: string, value: Uint8Array }> {
     const iteratorOpts: IteratorOptions<string, Uint8Array> = {
       keys: true,
-      keyEncoding: 'buffer',
       values: opts.values
     }
 
-    // Let the db do the prefix matching
     if (opts.prefix != null) {
       const prefix = opts.prefix.toString()
-      // Match keys greater than or equal to `prefix` and
       iteratorOpts.gte = prefix
-      // less than `prefix` + \xFF (hex escape sequence)
-      iteratorOpts.lt = prefix + '\xFF'
+      iteratorOpts.lt = prefix + '\\xFF'
     }
 
-    const li = this.db.iterator(iteratorOpts)
+    const iterator = this.db.iterator(iteratorOpts)
 
     try {
-      for await (const [key, value] of li) {
-        yield { key: new TextDecoder().decode(key), value }
+      for await (const [key, value] of iterator) {
+        yield { key: key.toString(), value }
       }
     } finally {
-      await li.close()
+      await iterator.close()
     }
   }
 }

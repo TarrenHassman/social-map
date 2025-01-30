@@ -1,4 +1,7 @@
 {
   "name": "cyberflylibp2papp",
-  "displayName": "cyberflylibp2papp"
+  "displayName": "cyberflylibp2papp",
+  "ios": {
+    "bundleIdentifier": "com.anonymous.cyberflylibp2papp"
+  }
 }

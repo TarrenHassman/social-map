@@ -1,72 +1,51 @@
-import {SKReactNativeLevel} from 'react-native-leveldb-level-adapter';
+import { Level } from 'level';
 
-const LevelStorage = async ({path = ''} = {}) => {
+const LevelStorage = async ({ path = '' } = {}) => {
   const name = path.replaceAll('/', '_');
 
-  const db = new SKReactNativeLevel(name, {valueEncoding: 'buffer'});
+  const db = new Level(name, { valueEncoding: 'buffer' });
   await db.open();
 
-  const put = async (hash: string, value: any) => {
+  const put = async (hash, value) => {
     await db.put(hash, value);
   };
 
-  /**
-   * Deletes data from Level.
-   * @function
-   * @param {string} hash The hash of the data to delete.
-   * @param {*} data The data to store.
-   * @memberof module:Storage.Storage-Level
-   * @instance
-   */
-  const del = async (hash: string) => {};
-  /**
-   * Gets data from Level.
-   * @function
-   * @param {string} hash The hash of the data to get.
-   * @memberof module:Storage.Storage-Level
-   * @instance
-   */
-  const get = async (hash: string) => {
+  const del = async (hash) => {
     try {
-      const value = await db.get(hash);
-      if (value) {
-        return value['data'];
-      }
+      await db.del(hash);
     } catch (e) {
-      // LEVEL_NOT_FOUND (ie. key not found)
+      // Handle error if necessary
     }
   };
 
-  /**
-   * Iterates over records stored in Level.
-   * @function
-   * @yields [string, string] The next key/value pair from Level.
-   * @memberof module:Storage.Storage-Level
-   * @instance
-   */
-  const iterator = async function* ({} = {}) {
+  const get = async (hash) => {
+    try {
+      return await db.get(hash);
+    } catch (e) {
+      // Handle LEVEL_NOT_FOUND (key not found)
+    }
+  };
+
+  const iterator = async function* () {
     for await (const [key, value] of db.iterator()) {
       yield [key, value];
     }
   };
-  const merge = other => {};
 
-  /**
-   * Clears the contents of the Level db.
-   * @function
-   * @memberof module:Storage.Storage-Level
-   * @instance
-   */
-  const clear = async () => {};
+  const merge = (other) => {
+    // Implement merging logic if needed
+  };
 
-  /**
-   * Closes the Level db.
-   * @function
-   * @memberof module:Storage.Storage-Level
-   * @instance
-   */
-  const close = () => {
-    db.close();
+  const clear = async () => {
+    try {
+      await db.clear();
+    } catch (e) {
+      // Handle error if necessary
+    }
+  };
+
+  const close = async () => {
+    await db.close();
   };
 
   return {

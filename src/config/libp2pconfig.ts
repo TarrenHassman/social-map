@@ -1,65 +1,61 @@
-import { bootstrap } from '@libp2p/bootstrap';
-import { noise } from '@chainsafe/libp2p-noise';
-import { yamux } from '@chainsafe/libp2p-yamux';
-import { identify } from '@libp2p/identify';
+import { noise } from '@chainsafe/libp2p-noise'; // Noise for secure communication
+import { yamux } from '@chainsafe/libp2p-yamux'; // Yamux for stream multiplexing
+import { identify } from '@libp2p/identify'; // Identify protocol for peer discovery
+import { webRTC } from '@libp2p/webrtc'; // WebRTC transport for browser-to-browser communication
+import { webSockets } from '@libp2p/websockets'; // WebSockets as a fallback transport
+import { all } from '@libp2p/websockets/filters'; // Filter to allow all WebSocket connections
+import { gossipsub } from '@chainsafe/libp2p-gossipsub'; // PubSub for decentralized messaging
+import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery'; // Peer discovery via PubSub
+import { dcutr } from '@libp2p/dcutr'; // DCUtR for hole-punching in NAT scenarios
 import { circuitRelayTransport } from '@libp2p/circuit-relay-v2';
-import { webSockets } from '@libp2p/websockets';
-import { webRTC } from '@libp2p/webrtc';
-import { all } from '@libp2p/websockets/filters';
-import { preSharedKey } from '@libp2p/pnet';
-import { fromString as uint8ArrayFromString } from 'uint8arrays/from-string';
-import { kadDHT } from '@libp2p/kad-dht';
-import { gossipsub } from '@chainsafe/libp2p-gossipsub'
-import { pubsubPeerDiscovery } from '@libp2p/pubsub-peer-discovery';
-import { autoNAT } from '@libp2p/autonat';
-import { dcutr } from '@libp2p/dcutr';
-const swarm = `/key/swarm/psk/1.0.0/
-/base16/
-8463a7707bad09f63538d273aa769cbdd732e43b07f207d88faa323566168ad3`;
 
 export const config = {
-    peerDiscovery: [
-        pubsubPeerDiscovery({
-            interval: 10000,
-            topics: ['lk;jasdkhfoiwejkfasd'],
-            listenOnly: false,
-          }),
+  // Addresses to listen on
+  addresses: {
+    listen: [
+      '/webrtc', // Prioritize WebRTC for direct browser-to-browser communication
+      '/wss', // Fallback to WebSockets for compatibility
     ],
-    connectionProtector: preSharedKey({
-        psk: uint8ArrayFromString(swarm),
-      }),
-    addresses: {
-      listen: [
-        '/webrtc',
-      ],
-    },
-    transports: [
-      webSockets({
-        filter: all,
-      }),
-      webRTC(),
-      circuitRelayTransport(),
-    ],
-    connectionEncrypters: [noise()],
-    connectionGater: {
-      denyDialMultiaddr: () => {
-        return false
-      }
-    },
-    streamMuxers: [yamux()],
-    services: {
-      autoNAT: autoNAT(),
-      dcutr: dcutr(),
-      pubsub: gossipsub({
-        allowPublishToZeroTopicPeers: true,
-        scoreThresholds: {
-          gossipThreshold: -Infinity,
-          publishThreshold: -Infinity,
-          graylistThreshold: -Infinity,
-        }, }),
-      identify: identify(),
-      dht: kadDHT({
-        clientMode: true,
-      })
-    },
-  };
+  },
+
+  // Transports for communication
+  transports: [
+    webRTC(), // Primary transport for browser-to-browser communication
+    webSockets({ filter: all }), // Fallback transport for broader compatibility
+    circuitRelayTransport(),
+  ],
+
+  // Connection encryption
+  connectionEncrypters: [noise()], // Use Noise for secure peer-to-peer communication
+
+  // Stream multiplexing
+  streamMuxers: [yamux()], // Use Yamux for efficient stream multiplexing
+
+  // Services
+  services: {
+    identify: identify(), // Enable Identify protocol for peer discovery and metadata exchange
+    pubsub: gossipsub({ // Enable PubSub for decentralized messaging
+      allowPublishToZeroTopicPeers: true, // Allow publishing even if no peers are subscribed
+      scoreThresholds: {
+        gossipThreshold: -Infinity, // Disable gossip scoring thresholds
+        publishThreshold: -Infinity, // Disable publish scoring thresholds
+        graylistThreshold: -Infinity, // Disable graylisting
+      },
+    }),
+    dcutr: dcutr(), // Enable DCUtR for NAT traversal (hole-punching)
+  },
+
+  // Peer discovery
+  peerDiscovery: [
+    pubsubPeerDiscovery({ // Use PubSub for peer discovery
+      interval: 10000, // Discover peers every 10 seconds
+      topics: ['browser-p2p-discovery'], // Custom topic for peer discovery
+      listenOnly: false, // Actively announce presence to peers
+    }),
+  ],
+
+  // Connection gater (optional, for advanced control)
+  connectionGater: {
+    denyDialMultiaddr: () => false, // Allow dialing any multiaddress
+  },
+};

@@ -1,25 +1,26 @@
 import {createHelia} from 'helia';
-import {createOrbitDB, ComposedStorage, LRUStorage} from '@orbitdb/core';
+import {createOrbitDB, ComposedStorage, LRUStorage, IPFSBlockStorage} from '@orbitdb/core';
 import {Identities, KeyStore} from '@orbitdb/core';
 import {config} from './config/libp2pconfig';
 import {createLibp2p} from 'libp2p';
 import debug from 'debug';
-import LevelStorage from './level-storage';
 import {LevelBlockstore} from './blockstore-level';
 
 debug.enable('libp2p:*,*:trace');
 
 const startOrbitDB = async () => {
   try {
-    console.log('startOrbitDB');
     const libp2p = await createLibp2p(config);
-    console.log('libp2p');
-    const blockstore = new LevelBlockstore('ipfs_blockstore');
+    // const blockstore = new LevelBlockstore('ipfs_blockstore');
+    const ipfs = await createHelia({libp2p, });
+      // blockstore});
+    const ipfsStorage = await IPFSBlockStorage({ipfs})
     const keyStorage = await ComposedStorage(
       await LRUStorage({size: 1000}),
-      await LevelStorage({path: 'keystore'}),
+      ipfsStorage
     );
-    const ipfs = await createHelia({libp2p, blockstore});
+    console.log('ComposedStorage Created')
+
     const keystore = await KeyStore({storage: keyStorage});
     const id = 'userA';
     const identities = await Identities({ipfs, keystore});

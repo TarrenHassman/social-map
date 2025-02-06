@@ -1,14 +1,13 @@
 import '../globals.js';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, Text,StyleSheet } from 'react-native';
 import { useAccessController } from '@orbitdb/core';
 import { startOrbitDB } from './db-services.ts';
 import { getAddress } from './utils.ts';
 import { ComposedStorage, LRUStorage, IPFSBlockStorage } from '@orbitdb/core';
-import LevelStorage from './level-storage.ts';
-
+import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
 import CyberflyAccessController from './cyberfly-access-controller.ts';
-
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 export default function App() {
   const [orbitdb, setOrbitDB] = useState(null);
   const [dbData, setDbData] = useState(null);
@@ -32,11 +31,11 @@ export default function App() {
       console.log(addr);
       const headsStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
-        await LevelStorage({ path: `heads_${addr}` }),
+        
       );
       const indexStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
-        await LevelStorage({ path: `index_${addr}` }),
+  
       );
       const entryStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
@@ -76,7 +75,7 @@ export default function App() {
 
   return (
     <SafeAreaView>
-      <Text>
+       <Text>
         Libp2p Node:{' '}
         {orbitdb ? orbitdb.ipfs.libp2p.peerId.toString() : 'Loading...'}
       </Text>
@@ -84,7 +83,34 @@ export default function App() {
         <Text>
           DB Data: {JSON.stringify(dbData, null, 2)}
         </Text>
-      )}
+      )} 
+      <Basic
+      
+      ></Basic>
     </SafeAreaView>
   );
 }
+
+export const Basic = () => {
+  // const editor = useEditorBridge({
+  //   autofocus: true,
+  //   avoidIosKeyboard: true,
+  //   initialContent,
+  // });
+
+  return (
+    <SafeAreaView style={
+      {
+        flex: 1,
+        backgroundColor: 'green',
+        height: '100%',
+        width: '100%',
+      }
+    }>
+      <Text>Libp2p Node: </Text>
+    </SafeAreaView>
+  );
+};
+
+
+const initialContent = `<p>This is a basic example!</p>`;

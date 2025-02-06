@@ -13,7 +13,6 @@ export const toSortJson = (data:any)=>{
 
   export const getAddress = async (orbitdb:any, name:any) => {
     const manifestStore = await ManifestStore({ ipfs:orbitdb.ipfs })
-
     const db = await manifestStore.create({name, type: 'documents', accessController:'/cyberfly/access-controller' });
     return db.hash
   }

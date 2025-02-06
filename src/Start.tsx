@@ -1,18 +1,15 @@
 import '../globals.js';
 import React, { useState, useEffect } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, Text,StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, SafeAreaView, Text } from 'react-native';
 import { useAccessController } from '@orbitdb/core';
 import { startOrbitDB } from './db-services.ts';
 import { getAddress } from './utils.ts';
 import { ComposedStorage, LRUStorage, IPFSBlockStorage } from '@orbitdb/core';
-import { RichText, Toolbar, useEditorBridge } from '@10play/tentap-editor';
-import CyberflyAccessController from './cyberfly-access-controller.ts';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 export default function App() {
   const [orbitdb, setOrbitDB] = useState(null);
   const [dbData, setDbData] = useState(null);
 
-  useAccessController(CyberflyAccessController);
+  // useAccessController(CyberflyAccessController);
 
   useEffect(() => {
     console.log('startOrbitDB');
@@ -45,7 +42,7 @@ export default function App() {
         'testnewdb1235-94faf73efcd9af950d4dbca3e5c65459221377b6ea31e3ed30112939a5c79aa8',
         {
           type: 'documents',
-          AccessController: CyberflyAccessController(),
+          // AccessController: CyberflyAccessController(),
           indexStorage,
           headsStorage,
           entryStorage,

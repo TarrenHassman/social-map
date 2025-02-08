@@ -16,6 +16,8 @@ const customConfig = {
       net: require.resolve('react-native-tcp-socket'),
       http: require.resolve('stream-http'),
       https: require.resolve('https-browserify'),
+      'indexeddb': require.resolve('localforage'),
+      'indexedDB': require.resolve('localforage'),
     },
   },
 };

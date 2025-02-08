@@ -14,6 +14,7 @@ module.exports = {
         'node:os': 'os-browserify',
         'path': 'path-browserify',
         'node:path': 'path-browserify',
+        'indexedDB': 'localforage',
         '#compare': './node_modules/uint8arrays/dist/src/compare.js',
           '#concat': './node_modules/uint8arrays/dist/src/concat.js',
           '#from-string': './node_modules/uint8arrays/dist/src/from-string.js',

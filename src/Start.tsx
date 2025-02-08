@@ -21,33 +21,46 @@ export default function App() {
   }, []);
 
   const addData = async (orbitdb: any) => {
+    console.log('addData');
     try {
       const dbname =
         'testnewdb1235-94faf73efcd9af950d4dbca3e5c65459221377b6ea31e3ed30112939a5c79aa8';
       const addr = await getAddress(orbitdb, dbname);
       console.log(addr);
+      
+      // Create IPFS storage for heads and index
+      const ipfsStorage = await IPFSBlockStorage({ ipfs: orbitdb.ipfs });
+      
       const headsStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
-        
+        ipfsStorage
       );
       const indexStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
-  
+        ipfsStorage
       );
       const entryStorage = await ComposedStorage(
         await LRUStorage({ size: 1000 }),
         await IPFSBlockStorage({ ipfs: orbitdb.ipfs, pin: true }),
       );
-      const db = await orbitdb.open(
-        'testnewdb1235-94faf73efcd9af950d4dbca3e5c65459221377b6ea31e3ed30112939a5c79aa8',
-        {
-          type: 'documents',
-          // AccessController: CyberflyAccessController(),
-          indexStorage,
-          headsStorage,
-          entryStorage,
-        },
-      );
+
+      const accessController = {
+        type: 'default',
+        canAppend: async () => true,
+        grant: async () => {},
+        revoke: async () => {},
+        save: async () => 'default',
+        load: async () => {},
+        close: async () => {}
+      };
+
+      const db = await orbitdb.open(dbname, {
+        type: 'documents',
+        AccessController: () => accessController,
+        indexStorage,
+        headsStorage,
+        entryStorage,
+      });
       // Add some records to the db.
       await db.put({
         _id: 0,

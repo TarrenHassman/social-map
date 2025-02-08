@@ -50,18 +50,12 @@ Creator Monetization
    (TBD: Stripe Integration for US cash payments)
    (*I have code for adding stripe connect systems but currently that requires a central server, business front,etc.*) (*Business side would be established as a non-profit*)
 
-
 # TODO
-
-Remove unused packages
-
-Remove other left over code from cyberfly.io
-
-Add Expo Modules
+Integrate Crypto Wallet authentication
 
 Add Bottom Navigation bar
 
-Integrate Crypto Wallet authentication
+Add web support / Responsive / Adaptive Design
 
 Setup git issue pipeline
 
@@ -70,22 +64,6 @@ Setup task tracker // task communication
 Setup Design pipeline (Canva / Figma Graphics and designs)
 
 Create Official Roadmap
-
-
-# TODO
-
-Remove unused packages
-
-Remove other left over code from cyberfly.io
-
-Add Expo Modules
-
-Add Bottom Navigation bar
-
-Setup git issue pipeline
-
-Setup task tracker // task communication
-
 
 # Learn More
 
@@ -101,6 +79,12 @@ To learn more about React Native, take a look at the following resources:
 To learn more about Helia and IPFS(Networking and implementation):
    https://ipfs.tech/
    https://github.com/ipfs/helia
+
+To learn about interoperability between IPFS and other CID networks:
+   https://ipld.io/docs/
+
+To learn about the differences between IPLD and ATProtocol(Bluesky):
+   https://atproto.com/specs/data-model
 
 To learn more about orbitDB (The database built on top of IPFS):
    https://github.com/orbitdb/orbitdb

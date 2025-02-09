@@ -1,4 +1,5 @@
-S# Getting Started
+
+
 # Non-Federated
 
 Federated systems are the equivalent of republics.

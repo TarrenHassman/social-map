@@ -94,33 +94,6 @@ export default function App() {
           DB Data: {JSON.stringify(dbData, null, 2)}
         </Text>
       )} 
-      <Basic
-      
-      ></Basic>
     </SafeAreaView>
   );
 }
-
-export const Basic = () => {
-  // const editor = useEditorBridge({
-  //   autofocus: true,
-  //   avoidIosKeyboard: true,
-  //   initialContent,
-  // });
-
-  return (
-    <SafeAreaView style={
-      {
-        flex: 1,
-        backgroundColor: 'green',
-        height: '100%',
-        width: '100%',
-      }
-    }>
-      <Text>Libp2p Node: </Text>
-    </SafeAreaView>
-  );
-};
-
-
-const initialContent = `<p>This is a basic example!</p>`;

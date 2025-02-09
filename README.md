@@ -1,3 +1,22 @@
+# Getting Started
+
+## Installation
+1. Clone the repository
+2. Install dependencies
+   ```bash
+   npm install
+   ```
+3. *iOS only*
+   ```bash
+   bundle install
+   ```
+4. Run the app
+   ```bash
+   npx expo run:ios
+   ```
+   ```bash
+   npx expo run:android
+   ```
 
 
 # Non-Federated
